@@ -1,0 +1,185 @@
+---
+import '../assets/scss/globals.scss';
+import Navigation from '../components/Navigation.astro';
+import DarkMode from '../components/DarkMode.astro';
+import SkipLinks from '../components/SkipLinks.astro';
+import Link from '../components/Link.astro';
+import { Icon } from 'astro-icon';
+
+const { title } = Astro.props;
+const githubLink = 'https://github.com/haishikawa/Astro-Demo';
+---
+
+<html lang="ja" dir="ltr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+		<!-- favicon -->
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<!-- google fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- open graph -->
+		<meta property="og:title" content="Accessible Astro Dashboard" />
+		<meta
+			property="og:description"
+			content="An Accessible Dashboard Theme for Astro including a login page, a dashboard page and several other pages and components."
+		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://dashboard.accessible-astro.dev" />
+		<meta property="og:image" content="/social-preview-image.png" />
+
+		<!-- page title -->
+		<title>{title}</title>
+	</head>
+	<body>
+		<header>
+			<SkipLinks />
+		</header>
+		<div class="ui-controls">
+			<DarkMode />
+		</div>
+		<div class="admin-interface">
+			<Navigation>
+				<li class="menu-item">
+					<Link>
+						<Icon pack="ic" name="outline-chrome-reader-mode" />
+						<span class="sr-only">ReadMe</span>
+					</Link>
+				</li>
+				<li class="menu-item">
+					<a href={githubLink}>
+						<Icon pack="mdi" name="github" />
+						<span class="sr-only">GitHub</span>
+					</a>
+				</li>
+				<li class="menu-item">
+					<Link to="dashboard">
+						<Icon pack="majesticons" name="home-line" />
+						<span class="sr-only">Dashboard</span>
+					</Link>
+				</li>
+				<li class="menu-item">
+					<Link to="products/">
+						<Icon pack="majesticons" name="shopping-cart-line" />
+						<span class="sr-only">Products</span>
+					</Link>
+				</li>
+				<li class="menu-item">
+					<Link to="users/">
+						<Icon pack="majesticons" name="users-line" />
+						<span class="sr-only">Users</span>
+					</Link>
+				</li>
+				<li class="menu-item">
+					<Link to="messages/">
+						<Icon pack="majesticons" name="messages-line" />
+						<span class="sr-only">Messages</span>
+					</Link>
+				</li>
+				<li class="menu-item">
+					<Link to="media/">
+						<Icon pack="majesticons" name="image-line" />
+						<span class="sr-only">Media</span>
+					</Link>
+				</li>
+			</Navigation>
+			<main id="main-content">
+				<slot />
+			</main>
+		</div>
+	</body>
+</html>
+
+<script>
+	let isLoggedIn = localStorage.getItem('isLoggedIn');
+	console.log(isLoggedIn);
+	if (isLoggedIn === null || isLoggedIn === '' || isLoggedIn === 'false') {
+		window.location.href = import.meta.env.BASE_URL + 'login';
+	}
+</script>
+
+<style lang="scss">
+	@use '../assets/scss/base/breakpoint' as *;
+
+	.ui-controls {
+		position: absolute;
+		top: 1rem;
+		right: 3.5rem;
+
+		@include breakpoint(medium) {
+			right: 1.15rem;
+		}
+	}
+
+	.admin-interface {
+		@include breakpoint(medium) {
+			display: grid;
+			grid-template-columns: 1fr auto;
+		}
+
+		main {
+			padding: 2rem;
+
+			@include breakpoint(medium) {
+				margin-left: 60px;
+				padding: 6rem;
+			}
+		}
+	}
+</style>
+
+<style lang="scss" is:global>
+	@use '../assets/scss/base/breakpoint' as *;
+	@use '../assets/scss/base/outline' as *;
+
+	.darkmode-toggle {
+		padding: 0;
+		border: none;
+
+		svg {
+			width: 25px;
+
+			@include breakpoint(medium) {
+				width: 30px;
+
+				path {
+					fill: var(--secondary-500);
+				}
+			}
+
+			path {
+				transition: fill 0.2s ease-in-out;
+			}
+		}
+
+		&:hover {
+			svg path {
+				fill: var(--primary-400);
+			}
+		}
+
+		&:focus {
+			@include outline;
+		}
+	}
+
+	.darkmode .darkmode-toggle {
+		svg path {
+			fill: var(--secondary-100);
+		}
+
+		&:hover {
+			svg path {
+				fill: var(--primary-400);
+			}
+		}
+	}
+</style>

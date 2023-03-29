@@ -1,0 +1,90 @@
+---
+import Notification from './Notification.astro';
+import { Icon } from 'astro-icon';
+---
+
+<form class="login-form space-content" method="post">
+	<Notification type="warning">
+		<Icon pack="majesticons" name="emoji-sad-line" /><p class="size-12">
+			メールアドレスとパスワードの組み合わせが間違っています。もう一度やり直して下さい。
+		</p>
+	</Notification>
+	<div class="login-form__controls">
+		<label for="email">メールアドレス</label>
+		<input type="email" name="email" required />
+	</div>
+	<div class="login-form__controls">
+		<label for="password">パスワード</label>
+		<input type="password" name="password" required />
+	</div>
+	<button class="button color-secondary behavior-full" type="submit"
+		>ログイン</button
+	>
+	<label class="checkbox">
+		<input type="checkbox" name="remember" />
+		<span>ログイン状態を保持する</span>
+	</label>
+	<a href="#">パスワードを忘れましたか？</a>
+</form>
+
+<script>
+	//TODO　ここをnanostoreから取得する者に変更
+	const emailAddress = 'admin@astro.demo';
+	const password = 'P@ssW0rd';
+	// variables
+	const form = document.querySelector('.login-form') as Element;
+	const notification = form.querySelector('.notification') as HTMLElement;
+	const emailInput = form.querySelector(
+		'input[name="email"]'
+	) as HTMLInputElement;
+	const passwordInput = form.querySelector(
+		'input[name="password"]'
+	) as HTMLInputElement;
+	const submitButton = form.querySelector('button') as HTMLButtonElement;
+
+	// execution
+	notification.style.display = 'none';
+
+	submitButton.addEventListener('click', (event) => {
+		event.preventDefault();
+
+		if (emailInput.value === emailAddress && passwordInput.value === password) {
+			localStorage.setItem('isLoggedIn', 'true');
+			window.location.href = import.meta.env.BASE_URL;
+		} else {
+			notification.style.display = 'flex';
+		}
+	});
+</script>
+
+<style lang="scss" is:global>
+	@use '../assets/scss/base/border' as *;
+	@use '../assets/scss/base/space' as *;
+
+	.login-form {
+		label {
+			display: block;
+			margin-bottom: $space-8;
+		}
+
+		input {
+			width: 100%;
+			@include radius-small;
+		}
+
+		input {
+			padding: $space-8;
+			border: 2px solid var(--neutral-600);
+		}
+
+		.checkbox {
+			display: flex;
+			align-items: center;
+			gap: $space-4;
+
+			input {
+				width: auto;
+			}
+		}
+	}
+</style>
