@@ -14,28 +14,28 @@ import { ConstructionStatus } from '../enum';
 	<section class="margin-32">
 		<div class="space-content">
 			<h2>Users overview</h2>
-			<ConstructionStatusChip client:load>デフォルト</ConstructionStatusChip>
+			<ConstructionStatusChip client:visible>デフォルト</ConstructionStatusChip>
 			<ConstructionStatusChip
 				statusCode={ConstructionStatus.applicated}
-				client:load
+				client:visible
 			>
 				デフォルト
 			</ConstructionStatusChip>
 			<ConstructionStatusChip
 				statusCode={ConstructionStatus.approved}
-				client:load
+				client:visible
 			>
 				デフォルト
 			</ConstructionStatusChip>
 			<ConstructionStatusChip
 				statusCode={ConstructionStatus.repudiated}
-				client:load
+				client:visible
 			>
 				デフォルト
 			</ConstructionStatusChip>
 			<ConstructionStatusChip
 				statusCode={ConstructionStatus.systemError}
-				client:load
+				client:visible
 			>
 				デフォルト
 			</ConstructionStatusChip>
