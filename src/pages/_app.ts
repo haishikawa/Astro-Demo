@@ -20,6 +20,7 @@ export default function setup(app: App) {
 			rintsu: '#02CBE2',
 			buppin: '#F9A825',
 			sharyo: '#48E257',
+			white: '#FFF',
 		},
 	};
 	const vuetify = createVuetify({
