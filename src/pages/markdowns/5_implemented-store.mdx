@@ -1,0 +1,103 @@
+---
+title: Store使う
+---
+import astroStar from '../../assets/img/astro-star.png';
+import componentIsland from '../../assets/img/component-island.png';
+
+<div class="padding-md w-md">
+# {frontmatter.title}
+
+---
+    <div class="content">
+    Vueが使えることはわかったし公式のtutorialにも記載あるのでまあ、いろいろフレームワーク入れれるのはわかったが、これStateの管理はどうするんだ？\
+    VueだとVuexとかReactだとReduxとかそれぞれ別々の状態管理していたと思う。ので気になったので調べて使ってみた。
+
+    ## nanostores
+    どうやら公式はnanostoresを使用して状態の管理を実施してほしいらしい
+    以下のコマンドでインストール
+    ```cmd
+    npm i nanostores
+    npm install nanostores @nanostores/persistent //localStorageに値を保持するためのライブラリ
+    ```
+    storeのファイルを作成してmutationとかの処理を追加
+    ```ts
+    //stores/counter.ts
+    import { persistentAtom } from '@nanostores/persistent';
+
+    const initialValue = { value: 0 };
+    //MPAなのでページ間でStoreの値を参照、更新できるよう設定
+    const counter = persistentAtom<number>('counter', initialValue.value, {
+        encode: JSON.stringify,
+        decode: JSON.parse,
+    });
+
+    const increaseCounter = () => counter.set(counter.get() + 1);
+
+    const decreaseCounter = () => counter.set(counter.get() - 1);
+    const cleanCounter = () => counter.set(initialValue.value);
+    export { counter, increaseCounter, decreaseCounter, cleanCounter };
+    ```
+
+    ## reactで使う
+    reactで使う場合は下記のコマンドを実行して追加でライブラリを入れる
+    ```cmd
+    npm i nanostores @nanostores/react
+    ```
+    ※reactのインテグレーションの設定をしていない場合は下記のコマンドを実行して設定する
+    ```cmd
+    npx astro add react
+    ```
+    コンポーネントで使用する
+    ```jsx
+    import { useStore } from '@nanostores/react';
+    import { counter, increaseCounter, decreaseCounter } from '../stores/counter';
+
+    export default function React() {
+        const count = useStore(counter);
+        const name = 'React';
+        return (
+            <>
+                <p> {name} のコンポーネント</p>
+                <button onClick={decreaseCounter}>-</button>
+                <pre>{count}</pre>
+                <button onClick={increaseCounter}>+</button>
+            </>
+        );
+    }
+    ```
+
+    ## vueで使う
+    reactで使う場合は下記のコマンドを実行して追加でライブラリを入れる
+    ```cmd
+    npm i nanostores @nanostores/vue
+    ```
+    コンポーネントで使用する
+    ```html
+        <template>
+            <p>{{ name }}のコンポーネント</p>
+            <button @click="decreaseCounter">-</button>
+            <pre>{{ count }}</pre>
+            <button @click="increaseCounter">+</button>
+        </template>
+
+        <script setup lang="ts">
+            import { useStore } from '@nanostores/vue';
+            import { counter, increaseCounter, decreaseCounter } from '../stores/counter';
+            const count = useStore(counter);
+            const name = 'Vue';
+        </script>
+    ```
+
+    ## 実際に使ってみる
+    下記のようにimportして使ってみる
+    ```astro
+    ---
+    import CounterVue from '../components/CounterVue.vue';
+    import CounterReact from '../components/CounterReact.jsx';
+    ---
+    <CounterVue client:load />
+	<CounterReact client:load />
+    ```
+    ↓以下は実際の描画
+    </div>
+</div>

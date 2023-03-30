@@ -3,13 +3,14 @@
 	"type": "module",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "astro dev",
 		"start": "astro dev",
 		"build": "astro check && tsc --noEmit && astro build",
 		"preview": "astro preview",
 		"astro": "astro"
 	},
 	"dependencies": {
+		"@astrojs/markdoc": "^0.1.0",
+		"@astrojs/mdx": "^0.18.2",
 		"@astrojs/react": "^2.1.0",
 		"@astrojs/vue": "^2.1.0",
 		"@nanostores/persistent": "^0.7.0",

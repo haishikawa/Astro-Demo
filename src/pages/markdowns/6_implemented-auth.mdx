@@ -1,0 +1,30 @@
+---
+title: 認証処理を考える
+---
+import astroStar from '../../assets/img/astro-star.png';
+import componentIsland from '../../assets/img/component-island.png';
+
+<div class="padding-md w-md">
+# {frontmatter.title}
+
+---
+    <div class="content">
+    以前案件でログインしている時だけ遷移できるページの実装をした。\
+    Vueの場合はVueRouterに処理を追加したり、Nuxtの場合はmidlewareを追加していたが、\
+    Astroだとどうやって実装すれば良いのか調べる。
+    ## layoutsに追加する
+    公式は下記のようにpagesに認証している場合のみ遷移させるlayoutを実装することを推奨していた
+    ```astro
+    <script>
+        let isLoggedIn = localStorage.getItem('isLoggedIn');//認証情報を保持しているか確認する
+        console.log(isLoggedIn);
+        //保持していない場合はログイン画面に遷移させる
+        if (isLoggedIn === null || isLoggedIn === '' || isLoggedIn === 'false') {
+            window.location.href = import.meta.env.BASE_URL + 'login';
+        }
+    </script>
+    ```
+    実際にこのサイトが上記の認証の実装をしているので各自で確認してみてください。
+
+    </div>
+</div>

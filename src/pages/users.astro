@@ -17,25 +17,6 @@ import DFlex from '../components/DFlex.astro';
 	<section class="margin-32">
 		<div class="space-content">
 			<h2>Users overview</h2>
-			<DFlex>
-				<CounterVue client:load />
-			</DFlex>
-			<DFlex>
-				<CounterReact client:load />
-			</DFlex>
-			<StatusChip client:visible>デフォルト</StatusChip>
-			<StatusChip statusCode={Status.applicated} client:visible>
-				デフォルト
-			</StatusChip>
-			<StatusChip statusCode={Status.approved} client:visible>
-				デフォルト
-			</StatusChip>
-			<StatusChip statusCode={Status.repudiated} client:visible>
-				デフォルト
-			</StatusChip>
-			<StatusChip statusCode={Status.systemError} client:visible>
-				デフォルト
-			</StatusChip>
 
 			<EmpyState>
 				You haven't added any users yet. Start by adding some.

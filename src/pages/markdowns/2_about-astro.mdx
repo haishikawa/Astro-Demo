@@ -1,0 +1,27 @@
+---
+title: Astroとは
+---
+import astroStar from '../../assets/img/astro-star.png';
+import componentIsland from '../../assets/img/component-island.png';
+
+<div class="padding-md w-md">
+# {frontmatter.title}
+
+---
+    <div class="content">
+        [Astro](https://astro.build/)はSSGの1つで2022年の8月にver1.0 がリリースされてから現在だとすでにver2.1まで出ている。
+        既にGitHubのスターは約29kくらいある。※ちゃんとスター送っといた◎
+        <img src={astroStar} alt="Astro Star"/>
+        ## 特徴
+        - **デフォルトでjsをHTMLに変換していく**\
+            Astroはビルド時にjsをHTMLに変換して行くので、処理が早くなる。\
+            Partial Hydrationをその都度実施しないと動かない（Storeの処理が会ったりVueやReactで構築されたコンポーネントを使用するときなど）
+        - **独自のアイランドアーキテクチャを採用している**\
+            ページ中の「静的な部分」や「動的な部分」をそれぞれアイランドという独立なコンポーネントに分割し、コンポーネント指向な開発ができる。\
+            <img src={componentIsland} alt="Component Island"/>
+        - **インテグレーションを追加すると簡単にいろいろな機能の追加ができる**\
+            VueやReactなどで作成されたフレームワークのコンポーネントを追加したりTailwindなどのライブラリの追加が可能。
+        - **MPAで作成されSPAよりも早い**\
+            NuxtのようにPagesディレクトリ配下に.astroファイルや.md、.mdxファイルを配置することでビルド時にpathを設定してくれる。
+    </div>
+</div>
