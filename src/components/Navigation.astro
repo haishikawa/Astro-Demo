@@ -66,6 +66,8 @@ import { Icon } from 'astro-icon';
 </div>
 
 <script>
+	import { cleanCounter } from '../stores/counter';
+
 	// variables
 	const mainNav = document.querySelector('#main-navigation') as Element;
 	const mainMenu = mainNav.querySelector('ul') as HTMLUListElement;
@@ -187,6 +189,7 @@ import { Icon } from 'astro-icon';
 		() => {
 			console.log('called');
 			localStorage.setItem('isLoggedIn', 'false');
+			cleanCounter();
 		}
 	);
 </script>

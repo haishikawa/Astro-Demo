@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@astrojs/react": "^2.1.0",
 		"@astrojs/vue": "^2.1.0",
+		"@nanostores/persistent": "^0.7.0",
 		"@nanostores/react": "^0.4.1",
 		"@nanostores/vue": "^0.7.0",
 		"@types/react": "^18.0.31",
