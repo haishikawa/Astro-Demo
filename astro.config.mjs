@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
 import vue from '@astrojs/vue';
 import vuetifyPlugin from 'vite-plugin-vuetify';
 
@@ -27,7 +28,13 @@ function vuetify(options) {
 
 // https://astro.build/config
 export default defineConfig({
-	integrations: [vue({ appEntrypoint: '/src/pages/_app' }), vuetify()],
+	integrations: [
+		vue({
+			appEntrypoint: '/src/pages/_app',
+		}),
+		vuetify(),
+		react(),
+	],
 	site: 'https://haishikawa.github.io/',
 	base: '/Astro-Demo',
 });
