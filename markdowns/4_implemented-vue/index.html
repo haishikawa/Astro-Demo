@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<div class="padding-md w-md"><h1 id="vueを使う">Vueを使う</h1><hr/><div class="content"><h2 id="vueのコンポーネントを使ってみる">Vueのコンポーネントを使ってみる。</h2><p>以前、案件で作成した下記のVueコンポーネントを使ってみる</p><pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#C9D1D9">//StatusChip.vue</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">template</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">    &lt;</span><span style="color:#7EE787">v-chip</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#79C0FF">class</span><span style="color:#C9D1D9">=</span><span style="color:#A5D6FF">&quot;status-chip&quot;</span></span>
+<span class="line"><span style="color:#C9D1D9">        :</span><span style="color:#79C0FF">color</span><span style="color:#C9D1D9">=</span><span style="color:#C9D1D9">&quot;</span><span style="color:#D2A8FF">getStatusColor</span><span style="color:#C9D1D9">(statusCode)</span><span style="color:#C9D1D9">&quot;</span></span>
+<span class="line"><span style="color:#C9D1D9">        :</span><span style="color:#79C0FF">outlined</span><span style="color:#C9D1D9">=</span><span style="color:#C9D1D9">&quot;</span><span style="color:#D2A8FF">isOutlinedStatus</span><span style="color:#C9D1D9">(statusCode)</span><span style="color:#C9D1D9">&quot;</span></span>
+<span class="line"><span style="color:#C9D1D9">        :</span><span style="color:#79C0FF">text-color</span><span style="color:#C9D1D9">=</span><span style="color:#C9D1D9">&quot;</span><span style="color:#D2A8FF">getStatusFontColor</span><span style="color:#C9D1D9">(statusCode)</span><span style="color:#C9D1D9">&quot;</span></span>
+<span class="line"><span style="color:#C9D1D9">    &gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">        &lt;</span><span style="color:#7EE787">slot</span><span style="color:#C9D1D9">&gt;&lt;/</span><span style="color:#7EE787">slot</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">    &lt;/</span><span style="color:#7EE787">v-chip</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">template</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">script</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">lang</span><span style="color:#C9D1D9">=</span><span style="color:#A5D6FF">&quot;ts&quot;</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> { Component, Prop, Vue } </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;vue-property-decorator&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> { Status } </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;@/enum&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C9D1D9">@Component</span></span>
+<span class="line"><span style="color:#FF7B72">export</span><span style="color:#FFA657"> </span><span style="color:#FF7B72">default</span><span style="color:#FFA657"> </span><span style="color:#FF7B72">class</span><span style="color:#FFA657"> StatusChip </span><span style="color:#FF7B72">extends</span><span style="color:#FFA657"> </span><span style="color:#79C0FF">Vue</span><span style="color:#FFA657"> {</span></span>
+<span class="line"><span style="color:#FFA657">    @</span><span style="color:#D2A8FF">Prop</span><span style="color:#FFA657">()</span></span>
+<span class="line"><span style="color:#FFA657">    </span><span style="color:#FF7B72">private</span><span style="color:#FFA657"> statusCode</span><span style="color:#FF7B72">!:</span><span style="color:#FFA657"> </span><span style="color:#79C0FF">number</span><span style="color:#FFA657">;</span></span>
+<span class="line"><span style="color:#FFA657">    </span><span style="color:#D2A8FF">getStatusColor</span><span style="color:#FFA657">(status_code</span><span style="color:#FF7B72">:</span><span style="color:#FFA657"> </span><span style="color:#79C0FF">number</span><span style="color:#FFA657">) </span><span style="color:#C9D1D9">{</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">switch</span><span style="color:#C9D1D9"> (status_code) {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.unApplicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.applicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;default&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.approved:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;positive&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.repudiated:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;negative&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.systemError:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;warning&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#FFA657">    </span><span style="color:#D2A8FF">isOutlinedStatus</span><span style="color:#FFA657">(status_code</span><span style="color:#FF7B72">:</span><span style="color:#FFA657"> </span><span style="color:#79C0FF">number</span><span style="color:#FFA657">) </span><span style="color:#C9D1D9">{</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">switch</span><span style="color:#C9D1D9"> (status_code) {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.unApplicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.applicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">true</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">default</span><span style="color:#C9D1D9">:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">false</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#FFA657">    </span><span style="color:#D2A8FF">getStatusFontColor</span><span style="color:#FFA657">(status_code</span><span style="color:#FF7B72">:</span><span style="color:#FFA657"> </span><span style="color:#79C0FF">number</span><span style="color:#FFA657">) </span><span style="color:#C9D1D9">{</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">switch</span><span style="color:#C9D1D9"> (status_code) {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.unApplicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.applicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.systemError:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;default&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">default</span><span style="color:#C9D1D9">:</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;white&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#FFA657">}</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">script</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">style</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">lang</span><span style="color:#C9D1D9">=</span><span style="color:#A5D6FF">&quot;scss&quot;</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">scoped</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#79C0FF">.status-chip</span><span style="color:#C9D1D9"> {</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#79C0FF">font-size</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">0.6</span><span style="color:#FF7B72">rem</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">!important</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#79C0FF">height</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">24</span><span style="color:#FF7B72">px</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">!important</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#79C0FF">width</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">5.5</span><span style="color:#FF7B72">rem</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#79C0FF">display</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">flex</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#79C0FF">justify-content</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">center</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">}</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">style</span><span style="color:#C9D1D9">&gt;</span></span></code></pre><h2 id="vueとvuetifyのインテグレーションを設定する">VueとVuetifyのインテグレーションを設定する。</h2><p>下記のコマンドを実行してVueとVuetifyのライブラリを追加する。</p><pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#C9D1D9">npx astro </span><span style="color:#79C0FF">add</span><span style="color:#C9D1D9"> vue</span></span>
+<span class="line"><span style="color:#C9D1D9">npm i vite</span><span style="color:#FF7B72">-</span><span style="color:#C9D1D9">plugin</span><span style="color:#FF7B72">-</span><span style="color:#C9D1D9">vuetify</span></span></code></pre><p>pages/_app.tsにVueのエントリーファイルを作成</p><pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#8B949E">//pages/_app.ts</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">type</span><span style="color:#C9D1D9"> { App } </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;vue&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> { createVuetify, ThemeDefinition } </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;vuetify&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">*</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">as</span><span style="color:#C9D1D9"> components </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;vuetify/components&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">*</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">as</span><span style="color:#C9D1D9"> directives </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;vuetify/directives&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF7B72">export</span><span style="color:#FFA657"> </span><span style="color:#FF7B72">default</span><span style="color:#FFA657"> </span><span style="color:#FF7B72">function</span><span style="color:#FFA657"> </span><span style="color:#D2A8FF">setup</span><span style="color:#FFA657">(app</span><span style="color:#FF7B72">:</span><span style="color:#FFA657"> App) </span><span style="color:#C9D1D9">{</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">const</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">myCustomLightTheme</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">=</span><span style="color:#C9D1D9"> {</span><span style="color:#8B949E">//以前の案件で設定したカラーと同じカラーを再度設定</span></span>
+<span class="line"><span style="color:#C9D1D9">        dark: </span><span style="color:#79C0FF">false</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">        colors: {</span></span>
+<span class="line"><span style="color:#C9D1D9">            main: </span><span style="color:#A5D6FF">&#39;#d71718&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            positive: </span><span style="color:#A5D6FF">&#39;#0adc5a&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            negative: </span><span style="color:#A5D6FF">&#39;#ff0000&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            warning: </span><span style="color:#A5D6FF">&#39;#ffff00&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            default: </span><span style="color:#A5D6FF">&#39;#4c4c4c&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            info: </span><span style="color:#A5D6FF">&#39;#3f51b5&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            btn_positive: </span><span style="color:#A5D6FF">&#39;#00c4b4&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            btn_default: </span><span style="color:#A5D6FF">&#39;#a6a6a6&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            btn_negative: </span><span style="color:#A5D6FF">&#39;#4c4c4c&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            bg_side_menu: </span><span style="color:#A5D6FF">&#39;#2b94e5&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            rintsu: </span><span style="color:#A5D6FF">&#39;#02CBE2&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            buppin: </span><span style="color:#A5D6FF">&#39;#F9A825&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            sharyo: </span><span style="color:#A5D6FF">&#39;#48E257&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            white: </span><span style="color:#A5D6FF">&#39;#FFF&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">        },</span></span>
+<span class="line"><span style="color:#C9D1D9">    };</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">const</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">vuetify</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">=</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">createVuetify</span><span style="color:#C9D1D9">({</span></span>
+<span class="line"><span style="color:#C9D1D9">        ssr: </span><span style="color:#79C0FF">true</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">        components,</span></span>
+<span class="line"><span style="color:#C9D1D9">        directives,</span></span>
+<span class="line"><span style="color:#C9D1D9">        theme: {</span></span>
+<span class="line"><span style="color:#C9D1D9">            defaultTheme: </span><span style="color:#A5D6FF">&#39;myCustomLightTheme&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">            themes: {</span></span>
+<span class="line"><span style="color:#C9D1D9">                myCustomLightTheme,</span></span>
+<span class="line"><span style="color:#C9D1D9">            },</span></span>
+<span class="line"><span style="color:#C9D1D9">        },</span></span>
+<span class="line"><span style="color:#C9D1D9">    });</span></span>
+<span class="line"><span style="color:#C9D1D9">    app.</span><span style="color:#D2A8FF">use</span><span style="color:#C9D1D9">(vuetify);</span></span>
+<span class="line"><span style="color:#C9D1D9">}</span></span></code></pre><p>astro.config.mjsにVueとVuetifyのインテグレーションの設定追加</p><pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#8B949E">//astro.config.mjs</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> { defineConfig } </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;astro/config&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> react </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;@astrojs/react&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> vue </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;@astrojs/vue&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> vuetifyPlugin </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;vite-plugin-vuetify&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> mdx </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&quot;@astrojs/mdx&quot;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> markdoc </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&quot;@astrojs/markdoc&quot;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E">/**</span></span>
+<span class="line"><span style="color:#8B949E">* Vuetify integration for Astro</span></span>
+<span class="line"><span style="color:#8B949E">* </span><span style="color:#FF7B72">@param</span><span style="color:#8B949E"> </span><span style="color:#FFA657">{import(&#39;astro/config&#39;).Options}</span><span style="color:#8B949E"> </span><span style="color:#C9D1D9">options</span></span>
+<span class="line"><span style="color:#8B949E">* </span><span style="color:#FF7B72">@returns</span><span style="color:#8B949E"> </span><span style="color:#FFA657">{import(&#39;astro/config&#39;).AstroIntegration}</span></span>
+<span class="line"><span style="color:#8B949E">*/</span></span>
+<span class="line"><span style="color:#FF7B72">function</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">vuetify</span><span style="color:#C9D1D9">(</span><span style="color:#FFA657">options</span><span style="color:#C9D1D9">) {</span></span>
+<span class="line"><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> {</span></span>
+<span class="line"><span style="color:#C9D1D9">    name: </span><span style="color:#A5D6FF">&#39;my-astro-vuetify-integration&#39;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">    hooks: {</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#A5D6FF">&#39;astro:config:setup&#39;</span><span style="color:#C9D1D9">: ({</span></span>
+<span class="line"><span style="color:#C9D1D9">        updateConfig</span></span>
+<span class="line"><span style="color:#C9D1D9">    }) </span><span style="color:#FF7B72">=&gt;</span><span style="color:#C9D1D9"> {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#D2A8FF">updateConfig</span><span style="color:#C9D1D9">({</span></span>
+<span class="line"><span style="color:#C9D1D9">        vite: {</span></span>
+<span class="line"><span style="color:#C9D1D9">            ssr: {</span></span>
+<span class="line"><span style="color:#C9D1D9">            noExternal: [</span><span style="color:#A5D6FF">&#39;vuetify&#39;</span><span style="color:#C9D1D9">]</span></span>
+<span class="line"><span style="color:#C9D1D9">            },</span></span>
+<span class="line"><span style="color:#C9D1D9">            plugins: [</span><span style="color:#D2A8FF">vuetifyPlugin</span><span style="color:#C9D1D9">()]</span></span>
+<span class="line"><span style="color:#C9D1D9">        }</span></span>
+<span class="line"><span style="color:#C9D1D9">        });</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#C9D1D9">};</span></span>
+<span class="line"><span style="color:#C9D1D9">}</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E">// https://astro.build/config</span></span>
+<span class="line"><span style="color:#FF7B72">export</span><span style="color:#FFA657"> </span><span style="color:#FF7B72">default</span><span style="color:#FFA657"> </span><span style="color:#D2A8FF">defineConfig</span><span style="color:#FFA657">({</span></span>
+<span class="line"><span style="color:#C9D1D9">integrations: [</span><span style="color:#D2A8FF">vue</span><span style="color:#C9D1D9">({</span></span>
+<span class="line"><span style="color:#C9D1D9">    appEntrypoint: </span><span style="color:#A5D6FF">&#39;/src/pages/_app&#39;</span><span style="color:#8B949E">//作成したエントリーファイルを指定</span></span>
+<span class="line"><span style="color:#C9D1D9">}), </span><span style="color:#D2A8FF">vuetify</span><span style="color:#C9D1D9">(), </span><span style="color:#D2A8FF">react</span><span style="color:#C9D1D9">(), </span><span style="color:#D2A8FF">mdx</span><span style="color:#C9D1D9">(), </span><span style="color:#D2A8FF">markdoc</span><span style="color:#C9D1D9">()]</span><span style="color:#FFA657">,</span></span>
+<span class="line"><span style="color:#C9D1D9">site: </span><span style="color:#A5D6FF">&#39;https://haishikawa.github.io/&#39;</span><span style="color:#FFA657">,</span></span>
+<span class="line"><span style="color:#C9D1D9">base: </span><span style="color:#A5D6FF">&#39;/Astro-Demo&#39;</span></span>
+<span class="line"><span style="color:#FFA657">})</span><span style="color:#C9D1D9">;</span></span></code></pre><h2 id="クラススタイルからコンポジションapiに変更">クラススタイルからコンポジションAPIに変更</h2><p>どうやらクラススタイルそのままが厳しそうなのでコンポジションAPI形式に変更<br/>
+以下変更後のコード</p><pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#C9D1D9">//StatusChip.vue</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">template</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">    &lt;</span><span style="color:#7EE787">v-chip</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#79C0FF">class</span><span style="color:#C9D1D9">=</span><span style="color:#A5D6FF">&quot;status-chip&quot;</span></span>
+<span class="line"><span style="color:#C9D1D9">        :</span><span style="color:#79C0FF">color</span><span style="color:#C9D1D9">=</span><span style="color:#C9D1D9">&quot;</span><span style="color:#D2A8FF">getStatusColor</span><span style="color:#C9D1D9">(statusCode)</span><span style="color:#C9D1D9">&quot;</span></span>
+<span class="line"><span style="color:#C9D1D9">        :</span><span style="color:#79C0FF">outlined</span><span style="color:#C9D1D9">=</span><span style="color:#C9D1D9">&quot;</span><span style="color:#D2A8FF">isOutlinedStatus</span><span style="color:#C9D1D9">(statusCode)</span><span style="color:#C9D1D9">&quot;</span></span>
+<span class="line"><span style="color:#C9D1D9">        :</span><span style="color:#79C0FF">text-color</span><span style="color:#C9D1D9">=</span><span style="color:#C9D1D9">&quot;</span><span style="color:#D2A8FF">getStatusFontColor</span><span style="color:#C9D1D9">(statusCode)</span><span style="color:#C9D1D9">&quot;</span></span>
+<span class="line"><span style="color:#C9D1D9">    &gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">        &lt;</span><span style="color:#7EE787">slot</span><span style="color:#C9D1D9">/&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">    &lt;/</span><span style="color:#7EE787">v-chip</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">template</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">script</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">lang</span><span style="color:#C9D1D9">=</span><span style="color:#A5D6FF">&quot;ts&quot;</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">setup</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> { Status } </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;../enum&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">interface</span><span style="color:#C9D1D9"> </span><span style="color:#FFA657">Props</span><span style="color:#C9D1D9"> {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FFA657">statusCode</span><span style="color:#FF7B72">?:</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">number</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#D2A8FF">withDefaults</span><span style="color:#C9D1D9">(</span><span style="color:#D2A8FF">defineProps</span><span style="color:#C9D1D9">&lt;</span><span style="color:#FFA657">Props</span><span style="color:#C9D1D9">&gt;(), { statusCode: </span><span style="color:#79C0FF">0</span><span style="color:#C9D1D9"> });</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">const</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">getStatusColor</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">=</span><span style="color:#C9D1D9"> (</span><span style="color:#FFA657">status_code</span><span style="color:#FF7B72">:</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">number</span><span style="color:#C9D1D9">) </span><span style="color:#FF7B72">=&gt;</span><span style="color:#C9D1D9"> {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">switch</span><span style="color:#C9D1D9"> (status_code) {</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.unApplicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.applicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">                </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;default&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.approved:</span></span>
+<span class="line"><span style="color:#C9D1D9">                </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;positive&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.repudiated:</span></span>
+<span class="line"><span style="color:#C9D1D9">                </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;negative&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.systemError:</span></span>
+<span class="line"><span style="color:#C9D1D9">                </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;warning&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        }</span></span>
+<span class="line"><span style="color:#C9D1D9">    };</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">const</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">isOutlinedStatus</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">=</span><span style="color:#C9D1D9"> (</span><span style="color:#FFA657">status_code</span><span style="color:#FF7B72">:</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">number</span><span style="color:#C9D1D9">) </span><span style="color:#FF7B72">=&gt;</span><span style="color:#C9D1D9"> {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">switch</span><span style="color:#C9D1D9"> (status_code) {</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.unApplicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.applicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">                </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">true</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">default</span><span style="color:#C9D1D9">:</span></span>
+<span class="line"><span style="color:#C9D1D9">                </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">false</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        }</span></span>
+<span class="line"><span style="color:#C9D1D9">    };</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">const</span><span style="color:#C9D1D9"> </span><span style="color:#D2A8FF">getStatusFontColor</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">=</span><span style="color:#C9D1D9"> (</span><span style="color:#FFA657">status_code</span><span style="color:#FF7B72">:</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">number</span><span style="color:#C9D1D9">) </span><span style="color:#FF7B72">=&gt;</span><span style="color:#C9D1D9"> {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#FF7B72">switch</span><span style="color:#C9D1D9"> (status_code) {</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.unApplicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.applicated:</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">case</span><span style="color:#C9D1D9"> Status.systemError:</span></span>
+<span class="line"><span style="color:#C9D1D9">                </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;default&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">            </span><span style="color:#FF7B72">default</span><span style="color:#C9D1D9">:</span></span>
+<span class="line"><span style="color:#C9D1D9">                </span><span style="color:#FF7B72">return</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;white&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        }</span></span>
+<span class="line"><span style="color:#C9D1D9">    };</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">script</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">style</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">lang</span><span style="color:#C9D1D9">=</span><span style="color:#A5D6FF">&quot;scss&quot;</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">scoped</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#79C0FF">.status-chip</span><span style="color:#C9D1D9"> {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#79C0FF">font-size</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">0.6</span><span style="color:#FF7B72">rem</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">!important</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#79C0FF">height</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">24</span><span style="color:#FF7B72">px</span><span style="color:#C9D1D9"> </span><span style="color:#FF7B72">!important</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#79C0FF">width</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">5.5</span><span style="color:#FF7B72">rem</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#79C0FF">display</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">flex</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#79C0FF">justify-content</span><span style="color:#C9D1D9">: </span><span style="color:#79C0FF">center</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">style</span><span style="color:#C9D1D9">&gt;</span></span></code></pre><h2 id="実際に使ってみる">実際に使ってみる</h2><p>下記のようにimportして使ってみる</p><pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#8B949E">---</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> StatusChip </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;../components/StatusChip.vue&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#FF7B72">import</span><span style="color:#C9D1D9"> { Status } </span><span style="color:#FF7B72">from</span><span style="color:#C9D1D9"> </span><span style="color:#A5D6FF">&#39;../enum&#39;</span><span style="color:#C9D1D9">;</span></span>
+<span class="line"><span style="color:#8B949E">---</span></span>
+<span class="line"><span style="color:#C9D1D9">//client:visibleはJSをHTMLに変換せずクライアント側で実行させるためのまじない</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">client:visible</span><span style="color:#C9D1D9">&gt;未申請&lt;/</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">statusCode</span><span style="color:#C9D1D9">=</span><span style="color:#FF7B72">{</span><span style="color:#C9D1D9">Status.applicated</span><span style="color:#FF7B72">}</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">client:visible</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">	申請中</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">statusCode</span><span style="color:#C9D1D9">=</span><span style="color:#FF7B72">{</span><span style="color:#C9D1D9">Status.approved</span><span style="color:#FF7B72">}</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">client:visible</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">	承認済み</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">statusCode</span><span style="color:#C9D1D9">=</span><span style="color:#FF7B72">{</span><span style="color:#C9D1D9">Status.repudiated</span><span style="color:#FF7B72">}</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">client:visible</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">	否認済み</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">statusCode</span><span style="color:#C9D1D9">=</span><span style="color:#FF7B72">{</span><span style="color:#C9D1D9">Status.systemError</span><span style="color:#FF7B72">}</span><span style="color:#C9D1D9"> </span><span style="color:#79C0FF">client:visible</span><span style="color:#C9D1D9">&gt;</span></span>
+<span class="line"><span style="color:#C9D1D9">	システムエラー</span></span>
+<span class="line"><span style="color:#C9D1D9">&lt;/</span><span style="color:#7EE787">StatusChip</span><span style="color:#C9D1D9">&gt;</span></span></code></pre><p>↓以下は実際の描画(developper toolとか使ってみるとAstroがastro-islandタグで変換してくれるのがわかる)</p></div></div>

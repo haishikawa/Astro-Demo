@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<div class="padding-md w-md"><h1 id="とりあえずプロジェクト作成して触ってみる">とりあえずプロジェクト作成して触ってみる</h1><hr/><div class="content"><h2 id="プロジェクト作成">プロジェクト作成</h2><p>以下のコマンドを実行※今回はnpmを利用して作成していく</p><pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#C9D1D9">    npm create astro@latest</span></span></code></pre><p>※今回はtypescriptとscssを利用して作成していく</p><h2 id="packagejsonを修正する">package.jsonを修正する</h2><p>個人的にpackage.jsonがいけてない感あったのでscript周りを修正する。</p><pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#C9D1D9">{</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#7EE787">&quot;scripts&quot;</span><span style="color:#C9D1D9">: {</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#7EE787">&quot;start&quot;</span><span style="color:#C9D1D9">: </span><span style="color:#A5D6FF">&quot;astro dev&quot;</span><span style="color:#C9D1D9">,</span><span style="color:#8B949E">//&quot;dev&quot;: &quot;astro dev&quot;から修正</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#7EE787">&quot;build&quot;</span><span style="color:#C9D1D9">: </span><span style="color:#A5D6FF">&quot;astro check &amp;&amp; tsc --noEmit &amp;&amp; astro build&quot;</span><span style="color:#C9D1D9">,</span><span style="color:#8B949E">//&quot;build&quot;: &quot;astro build&quot;から修正</span></span>
+<span class="line"><span style="color:#C9D1D9">        </span><span style="color:#7EE787">&quot;preview&quot;</span><span style="color:#C9D1D9">: </span><span style="color:#A5D6FF">&quot;astro preview&quot;</span><span style="color:#C9D1D9">,</span></span>
+<span class="line"><span style="color:#C9D1D9">    }</span></span>
+<span class="line"><span style="color:#C9D1D9">}</span></span></code></pre><h2 id="package-scriptの説明">package scriptの説明</h2><ul>
+<li><strong>start</strong><br/>
+ローカル実行用コマンド</li>
+<li><strong>build</strong><br/>
+ビルド用コマンド<br/>
+astroのコードにエラーがないか確認し、buildファイルを作成する。（デフォルトでdistファイルに作成される。）<br/>
+今回はgithub pagesに公開するので、下記のようにsiteの設定とbase pathの設定を追記する
+<pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FF7B72">export</span><span style="color:#FFA657"> </span><span style="color:#FF7B72">default</span><span style="color:#FFA657"> </span><span style="color:#D2A8FF">defineConfig</span><span style="color:#FFA657">({</span></span>
+<span class="line"><span style="color:#FFA657">        </span><span style="color:#C9D1D9">integrations: [</span><span style="color:#D2A8FF">vue</span><span style="color:#C9D1D9">({</span></span>
+<span class="line"><span style="color:#C9D1D9">            appEntrypoint: </span><span style="color:#A5D6FF">&#39;/src/pages/_app&#39;</span></span>
+<span class="line"><span style="color:#C9D1D9">        }), </span><span style="color:#D2A8FF">vuetify</span><span style="color:#C9D1D9">(), </span><span style="color:#D2A8FF">react</span><span style="color:#C9D1D9">(), </span><span style="color:#D2A8FF">mdx</span><span style="color:#C9D1D9">(), </span><span style="color:#D2A8FF">markdoc</span><span style="color:#C9D1D9">()]</span><span style="color:#FFA657">,</span></span>
+<span class="line"><span style="color:#FFA657">        </span><span style="color:#C9D1D9">site: </span><span style="color:#A5D6FF">&#39;https://haishikawa.github.io/&#39;</span><span style="color:#FFA657">,</span><span style="color:#8B949E">//ここを追加</span></span>
+<span class="line"><span style="color:#FFA657">        </span><span style="color:#C9D1D9">base: </span><span style="color:#A5D6FF">&#39;/Astro-Demo&#39;</span><span style="color:#8B949E">//ここを追加</span></span>
+<span class="line"><span style="color:#C9D1D9">    </span><span style="color:#FFA657">})</span><span style="color:#C9D1D9">;</span></span></code></pre>
+</li>
+<li><strong>preview</strong><br/>
+ビルドファイル確認コマンド<br/>
+ビルドコマンドで作成したファイルをローカル実行で確認することができる。</li>
+</ul><h2 id="実行して確認">実行して確認</h2><p>下記コマンドで実行して確認する</p><pre class="astro-code" style="background-color:#0d1117;overflow-x:auto"><code><span class="line"><span style="color:#C9D1D9">    npm start</span></span></code></pre><p>構築は公式の<a href="https://docs.astro.build/en/tutorial/0-introduction/">tutorial</a>などを見ながら作成。</p></div></div>
