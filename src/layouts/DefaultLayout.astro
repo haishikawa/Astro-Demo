@@ -54,12 +54,7 @@ const githubLink = 'https://github.com/haishikawa/Astro-Demo';
 						<span class="sr-only">ReadMe</span>
 					</Link>
 				</li>
-				<li class="menu-item">
-					<a href={githubLink}>
-						<Icon pack="mdi" name="github" />
-						<span class="sr-only">GitHub</span>
-					</a>
-				</li>
+
 				<li class="menu-item">
 					<Link to="dashboard">
 						<Icon pack="majesticons" name="home-line" />
@@ -90,6 +85,12 @@ const githubLink = 'https://github.com/haishikawa/Astro-Demo';
 						<span class="sr-only">Media</span>
 					</Link>
 				</li>
+				<li class="menu-item">
+					<a href={githubLink}>
+						<Icon pack="mdi" name="github" />
+						<span class="sr-only">GitHub</span>
+					</a>
+				</li>
 			</Navigation>
 			<main id="main-content">
 				<slot />
@@ -108,7 +109,9 @@ const githubLink = 'https://github.com/haishikawa/Astro-Demo';
 
 <style lang="scss">
 	@use '../assets/scss/base/breakpoint' as *;
-
+	body {
+		font-size: 1.3rem;
+	}
 	.ui-controls {
 		position: absolute;
 		top: 1rem;

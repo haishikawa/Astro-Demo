@@ -2,6 +2,8 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import vue from '@astrojs/vue';
 import vuetifyPlugin from 'vite-plugin-vuetify';
+import mdx from '@astrojs/mdx';
+import markdoc from '@astrojs/markdoc';
 
 /**
  * Vuetify integration for Astro
@@ -34,6 +36,8 @@ export default defineConfig({
 		}),
 		vuetify(),
 		react(),
+		mdx(),
+		markdoc(),
 	],
 	site: 'https://haishikawa.github.io/',
 	base: '/Astro-Demo',

@@ -6,17 +6,25 @@
 @use '../space' as *;
 
 @each $space in $space-scale {
-  $nr: nth($space, 1);
-  $space-small: nth($space, 2);
-  $space-medium: nth($space, 3);
+	$nr: nth($space, 1);
+	$space-small: nth($space, 2);
+	$space-medium: nth($space, 3);
 
-  .padding-#{$nr} {
-    padding-top: #{$space-small};
-    padding-bottom: #{$space-small};
+	.padding-#{$nr} {
+		padding-top: #{$space-small};
+		padding-bottom: #{$space-small};
 
-    @include breakpoint(medium) {
-      padding-top: #{$space-medium};
-      padding-bottom: #{$space-medium};
-    }
-  }
+		@include breakpoint(medium) {
+			padding-top: #{$space-medium};
+			padding-bottom: #{$space-medium};
+		}
+	}
+}
+
+.padding-md {
+	padding-top: 4rem;
+	.content {
+		padding: 1rem 2rem;
+		background-color: var(--primary-background);
+	}
 }

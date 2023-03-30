@@ -1,0 +1,58 @@
+---
+title: とりあえずプロジェクト作成して触ってみる
+---
+
+<div class="padding-md w-md">
+# {frontmatter.title}
+
+---
+    <div class="content">
+        ## プロジェクト作成
+        以下のコマンドを実行※今回はnpmを利用して作成していく
+        ```cmd
+            npm create astro@latest
+        ```
+        ※今回はtypescriptとscssを利用して作成していく
+
+        ## package.jsonを修正する
+        個人的にpackage.jsonがいけてない感あったのでscript周りを修正する。
+        ```json
+        {
+            "scripts": {
+                "start": "astro dev",//"dev": "astro dev"から修正
+                "build": "astro check && tsc --noEmit && astro build",//"build": "astro build"から修正
+                "preview": "astro preview",
+            }
+        }
+        ```
+
+
+
+        ## package scriptの説明
+        - **start**\
+            ローカル実行用コマンド
+        - **build**\
+            ビルド用コマンド\
+            astroのコードにエラーがないか確認し、buildファイルを作成する。（デフォルトでdistファイルに作成される。）\
+            今回はgithub pagesに公開するので、下記のようにsiteの設定とbase pathの設定を追記する
+            ```js
+                export default defineConfig({
+                    integrations: [vue({
+                        appEntrypoint: '/src/pages/_app'
+                    }), vuetify(), react(), mdx(), markdoc()],
+                    site: 'https://haishikawa.github.io/',//ここを追加
+                    base: '/Astro-Demo'//ここを追加
+                });
+                ```
+        - **preview**\
+            ビルドファイル確認コマンド\
+            ビルドコマンドで作成したファイルをローカル実行で確認することができる。
+
+        ## 実行して確認
+        下記コマンドで実行して確認する
+        ```cmd
+            npm start
+        ```
+        構築は公式の[tutorial](https://docs.astro.build/en/tutorial/0-introduction/)などを見ながら作成。
+    </div>
+</div>

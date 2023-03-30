@@ -1,0 +1,263 @@
+---
+title: Vueを使う
+---
+
+<div class="padding-md w-md">
+# {frontmatter.title}
+
+---
+    <div class="content">
+        ## Vueのコンポーネントを使ってみる。
+        以前、案件で作成した下記のVueコンポーネントを使ってみる
+        ```vue
+        //StatusChip.vue
+        <template>
+            <v-chip
+                class="status-chip"
+                :color="getStatusColor(statusCode)"
+                :outlined="isOutlinedStatus(statusCode)"
+                :text-color="getStatusFontColor(statusCode)"
+            >
+                <slot></slot>
+            </v-chip>
+        </template>
+
+        <script lang="ts">
+        import { Component, Prop, Vue } from 'vue-property-decorator';
+        import { Status } from '@/enum';
+
+        @Component
+        export default class StatusChip extends Vue {
+            @Prop()
+            private statusCode!: number;
+            getStatusColor(status_code: number) {
+            switch (status_code) {
+                case Status.unApplicated:
+                case Status.applicated:
+                return 'default';
+                case Status.approved:
+                return 'positive';
+                case Status.repudiated:
+                return 'negative';
+                case Status.systemError:
+                return 'warning';
+            }
+            }
+            isOutlinedStatus(status_code: number) {
+            switch (status_code) {
+                case Status.unApplicated:
+                case Status.applicated:
+                return true;
+                default:
+                return false;
+            }
+            }
+            getStatusFontColor(status_code: number) {
+            switch (status_code) {
+                case Status.unApplicated:
+                case Status.applicated:
+                case Status.systemError:
+                return 'default';
+                default:
+                return 'white';
+            }
+            }
+        }
+        </script>
+
+        <style lang="scss" scoped>
+        .status-chip {
+            font-size: 0.6rem !important;
+            height: 24px !important;
+            width: 5.5rem;
+            display: flex;
+            justify-content: center;
+        }
+        </style>
+        ```
+        ## VueとVuetifyのインテグレーションを設定する。
+        下記のコマンドを実行してVueとVuetifyのライブラリを追加する。
+        ```cmd
+        npx astro add vue
+        npm i vite-plugin-vuetify
+        ```
+        pages/_app.tsにVueのエントリーファイルを作成
+        ```ts
+        //pages/_app.ts
+        import type { App } from 'vue';
+        import { createVuetify, ThemeDefinition } from 'vuetify';
+        import * as components from 'vuetify/components';
+        import * as directives from 'vuetify/directives';
+
+        export default function setup(app: App) {
+            const myCustomLightTheme = {//以前の案件で設定したカラーと同じカラーを再度設定
+                dark: false,
+                colors: {
+                    main: '#d71718',
+                    positive: '#0adc5a',
+                    negative: '#ff0000',
+                    warning: '#ffff00',
+                    default: '#4c4c4c',
+                    info: '#3f51b5',
+                    btn_positive: '#00c4b4',
+                    btn_default: '#a6a6a6',
+                    btn_negative: '#4c4c4c',
+                    bg_side_menu: '#2b94e5',
+                    rintsu: '#02CBE2',
+                    buppin: '#F9A825',
+                    sharyo: '#48E257',
+                    white: '#FFF',
+                },
+            };
+            const vuetify = createVuetify({
+                ssr: true,
+                components,
+                directives,
+                theme: {
+                    defaultTheme: 'myCustomLightTheme',
+                    themes: {
+                        myCustomLightTheme,
+                    },
+                },
+            });
+            app.use(vuetify);
+        }
+        ```
+
+        astro.config.mjsにVueとVuetifyのインテグレーションの設定追加
+        ``` js
+        //astro.config.mjs
+        import { defineConfig } from 'astro/config';
+        import react from '@astrojs/react';
+        import vue from '@astrojs/vue';
+        import vuetifyPlugin from 'vite-plugin-vuetify';
+        import mdx from "@astrojs/mdx";
+        import markdoc from "@astrojs/markdoc";
+
+        /**
+        * Vuetify integration for Astro
+        * @param {import('astro/config').Options} options
+        * @returns {import('astro/config').AstroIntegration}
+        */
+        function vuetify(options) {
+        return {
+            name: 'my-astro-vuetify-integration',
+            hooks: {
+            'astro:config:setup': ({
+                updateConfig
+            }) => {
+                updateConfig({
+                vite: {
+                    ssr: {
+                    noExternal: ['vuetify']
+                    },
+                    plugins: [vuetifyPlugin()]
+                }
+                });
+            }
+            }
+        };
+        }
+
+
+        // https://astro.build/config
+        export default defineConfig({
+        integrations: [vue({
+            appEntrypoint: '/src/pages/_app'//作成したエントリーファイルを指定
+        }), vuetify(), react(), mdx(), markdoc()],
+        site: 'https://haishikawa.github.io/',
+        base: '/Astro-Demo'
+        });
+        ```
+        ## クラススタイルからコンポジションAPIに変更
+        どうやらクラススタイルそのままが厳しそうなのでコンポジションAPI形式に変更\
+        以下変更後のコード
+        ```vue
+        //StatusChip.vue
+        <template>
+            <v-chip
+                class="status-chip"
+                :color="getStatusColor(statusCode)"
+                :outlined="isOutlinedStatus(statusCode)"
+                :text-color="getStatusFontColor(statusCode)"
+            >
+                <slot/>
+            </v-chip>
+        </template>
+
+        <script lang="ts" setup>
+            import { Status } from '../enum';
+            interface Props {
+                statusCode?: number;
+            }
+            withDefaults(defineProps<Props>(), { statusCode: 0 });
+            const getStatusColor = (status_code: number) => {
+                switch (status_code) {
+                    case Status.unApplicated:
+                    case Status.applicated:
+                        return 'default';
+                    case Status.approved:
+                        return 'positive';
+                    case Status.repudiated:
+                        return 'negative';
+                    case Status.systemError:
+                        return 'warning';
+                }
+            };
+            const isOutlinedStatus = (status_code: number) => {
+                switch (status_code) {
+                    case Status.unApplicated:
+                    case Status.applicated:
+                        return true;
+                    default:
+                        return false;
+                }
+            };
+            const getStatusFontColor = (status_code: number) => {
+                switch (status_code) {
+                    case Status.unApplicated:
+                    case Status.applicated:
+                    case Status.systemError:
+                        return 'default';
+                    default:
+                        return 'white';
+                }
+            };
+        </script>
+
+        <style lang="scss" scoped>
+            .status-chip {
+                font-size: 0.6rem !important;
+                height: 24px !important;
+                width: 5.5rem;
+                display: flex;
+                justify-content: center;
+            }
+        </style>
+        ```
+
+        ## 実際に使ってみる
+        下記のようにimportして使ってみる
+        ```astro
+        ---
+        import StatusChip from '../components/StatusChip.vue';
+        import { Status } from '../enum';
+        ---
+        //client:visibleはJSをHTMLに変換せずクライアント側で実行させるためのまじない
+        <StatusChip client:visible>未申請</StatusChip>
+		<StatusChip statusCode={Status.applicated} client:visible>
+			申請中
+		</StatusChip>
+		<StatusChip statusCode={Status.approved} client:visible>
+			承認済み
+		</StatusChip>
+		<StatusChip statusCode={Status.repudiated} client:visible>
+			否認済み
+		</StatusChip>
+		<StatusChip statusCode={Status.systemError} client:visible>
+			システムエラー
+		</StatusChip>
+        ```
+        ↓以下は実際の描画(developper toolとか使ってみるとAstroがastro-islandタグで変換してくれるのがわかる)
+    </div>
+</div>
