@@ -1,7 +1,7 @@
-export enum ConstructionStatus {
-	unApplicated = 1,
-	applicated = 2,
-	approved = 4,
-	repudiated = 8,
-	systemError = 16,
+export enum Status {
+	unApplicated = 0,
+	applicated = 1,
+	approved = 2,
+	repudiated = 3,
+	systemError = 4,
 }

@@ -2,10 +2,11 @@
 import DefaultLayout from '../layouts/DefaultLayout.astro';
 import EmpyState from '../components/EmpyState.astro';
 import Modal from '../components/Modal.astro';
-import ConstructionStatusChip from '../components/ConstructionStatusChip.vue';
-import { ConstructionStatus } from '../enum';
+import StatusChip from '../components/StatusChip.vue';
+import { Status } from '../enum';
 import CounterVue from '../components/CounterVue.vue';
 import CounterReact from '../components/CounterReact.jsx';
+import DFlex from '../components/DFlex.astro';
 ---
 
 <DefaultLayout title="Users">
@@ -16,33 +17,25 @@ import CounterReact from '../components/CounterReact.jsx';
 	<section class="margin-32">
 		<div class="space-content">
 			<h2>Users overview</h2>
-			<CounterVue client:load />
-			<CounterReact client:load />
-			<ConstructionStatusChip client:visible>デフォルト</ConstructionStatusChip>
-			<ConstructionStatusChip
-				statusCode={ConstructionStatus.applicated}
-				client:visible
-			>
+			<DFlex>
+				<CounterVue client:load />
+			</DFlex>
+			<DFlex>
+				<CounterReact client:load />
+			</DFlex>
+			<StatusChip client:visible>デフォルト</StatusChip>
+			<StatusChip statusCode={Status.applicated} client:visible>
 				デフォルト
-			</ConstructionStatusChip>
-			<ConstructionStatusChip
-				statusCode={ConstructionStatus.approved}
-				client:visible
-			>
+			</StatusChip>
+			<StatusChip statusCode={Status.approved} client:visible>
 				デフォルト
-			</ConstructionStatusChip>
-			<ConstructionStatusChip
-				statusCode={ConstructionStatus.repudiated}
-				client:visible
-			>
+			</StatusChip>
+			<StatusChip statusCode={Status.repudiated} client:visible>
 				デフォルト
-			</ConstructionStatusChip>
-			<ConstructionStatusChip
-				statusCode={ConstructionStatus.systemError}
-				client:visible
-			>
+			</StatusChip>
+			<StatusChip statusCode={Status.systemError} client:visible>
 				デフォルト
-			</ConstructionStatusChip>
+			</StatusChip>
 
 			<EmpyState>
 				You haven't added any users yet. Start by adding some.

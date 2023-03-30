@@ -10,28 +10,28 @@
 </template>
 
 <script lang="ts" setup>
-	import { ConstructionStatus } from '../enum';
+	import { Status } from '../enum';
 	interface Props {
 		statusCode?: number;
 	}
-	withDefaults(defineProps<Props>(), { statusCode: 1 });
+	withDefaults(defineProps<Props>(), { statusCode: 0 });
 	const getStatusColor = (status_code: number) => {
 		switch (status_code) {
-			case ConstructionStatus.unApplicated:
-			case ConstructionStatus.applicated:
+			case Status.unApplicated:
+			case Status.applicated:
 				return 'default';
-			case ConstructionStatus.approved:
+			case Status.approved:
 				return 'positive';
-			case ConstructionStatus.repudiated:
+			case Status.repudiated:
 				return 'negative';
-			case ConstructionStatus.systemError:
+			case Status.systemError:
 				return 'warning';
 		}
 	};
 	const isOutlinedStatus = (status_code: number) => {
 		switch (status_code) {
-			case ConstructionStatus.unApplicated:
-			case ConstructionStatus.applicated:
+			case Status.unApplicated:
+			case Status.applicated:
 				return true;
 			default:
 				return false;
@@ -39,9 +39,9 @@
 	};
 	const getStatusFontColor = (status_code: number) => {
 		switch (status_code) {
-			case ConstructionStatus.unApplicated:
-			case ConstructionStatus.applicated:
-			case ConstructionStatus.systemError:
+			case Status.unApplicated:
+			case Status.applicated:
+			case Status.systemError:
 				return 'default';
 			default:
 				return 'white';
